@@ -1,0 +1,74 @@
+---
+- name: Configure rpm-ostreed-automatic to automatically upgrade the system
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Configure rpm-ostreed to stage updates, which then get applied on next reboot
+      community.general.ini_file:
+        path: '/etc/rpm-ostreed.conf'
+        section: 'Daemon'
+        option: 'AutomaticUpdatePolicy'
+        # Controls the automatic update policy. Currently "none", "check", "stage", "apply".
+        # "none" disables automatic updates.
+        # "check" downloads just enough metadata to check for updates and display them in rpm-ostree status.
+        # The "stage" policy downloads and unpacks the update, queuing it for the next boot.
+        # Finally, the "apply" policy will currently always initiate a reboot.
+        # However, in the future it may apply userspace-only fixes without a physical reboot.
+        value: 'stage'
+        no_extra_spaces: true
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Create directory to hold systemd drop-in to override rpm-ostreed-automatic timer unit settings
+      ansible.builtin.file:
+        path: /etc/systemd/system/rpm-ostreed-automatic.timer.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create drop-in to override rpm-ostreed-automatic timings
+      community.general.ini_file:
+        path: /etc/systemd/system/rpm-ostreed-automatic.timer.d/99-override-timings.conf
+        owner: root
+        group: root
+        mode: '0644'
+        section: 'Timer'
+        option: '{{ item.option }}'
+        no_extra_spaces: true
+        value: '{{ item.value }}'
+      with_items:
+        - option: "Persistent"
+          value: "true"  # Trigger the service immediately if we missed the last run due to the system being off/suspended
+        - option: "OnCalendar"
+          value: "*-*-* 00,06,12,18:00:00"  # Try to update every 6 hours
+        - option: "RandomizedDelaySec"
+          value: "1h"  # With up to a 1h delay
+
+    - name: Create directory to hold systemd drop-in to override rpm-ostreed-automatic service unit settings
+      ansible.builtin.file:
+        path: /etc/systemd/system/rpm-ostreed-automatic.service.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create drop-in to configure rpm-ostreed-automatic to only start when AC power is connected
+      community.general.ini_file:
+        path: /etc/systemd/system/rpm-ostreed-automatic.service.d/99-override-on-battery.conf
+        owner: root
+        group: root
+        mode: '0644'
+        section: 'Unit'
+        option: 'ConditionACPower'
+        no_extra_spaces: true
+        value: 'true'
+
+    - name: Start and enable rpm-ostreed-automatic.timer
+      ansible.builtin.systemd:
+        name: 'rpm-ostreed-automatic.timer'
+        state: started
+        enabled: true
+        daemon_reload: true
+...

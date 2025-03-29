@@ -1,0 +1,9 @@
+---
+- name: Disable root user
+  become: true
+  when: inventory_hostname in groups['host']
+  ansible.builtin.user:
+    name: root
+    password: '!'
+    password_lock: true
+...

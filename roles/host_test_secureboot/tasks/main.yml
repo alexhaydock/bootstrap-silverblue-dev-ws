@@ -1,0 +1,17 @@
+---
+- name: Test Secure Boot status
+  when: inventory_hostname in groups['host']
+  ansible.builtin.command: 'mokutil --sb-state'
+  register: sbstate
+  changed_when: false
+  failed_when: "'enabled' not in sbstate.stdout"
+  ignore_errors: true  # Continue running playbook even if there's a failure here
+
+- name: Test Kernel Lockdown status
+  when: inventory_hostname in groups['host']
+  ansible.builtin.command: 'cat /sys/kernel/security/lockdown'
+  register: lockdownstate
+  changed_when: false
+  failed_when: "'[integrity]' not in lockdownstate.stdout"  # what about [confidentiality]?
+  ignore_errors: true  # Continue running playbook even if there's a failure here
+...

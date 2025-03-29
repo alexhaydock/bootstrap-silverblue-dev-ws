@@ -1,0 +1,12 @@
+---
+- name: Check that we have an active LSM
+  when: inventory_hostname in groups['host']
+  ansible.builtin.command: echo hello
+  changed_when: false
+  failed_when:
+    - not ansible_apparmor.status == "enabled"
+    - not ansible_selinux.status == "enabled"
+  ignore_errors: true  # Continue running playbook even if there's a failure here
+  tags:
+    - skip_ansible_lint  # Otherwise it complains about us using ignore_errors in any circumstance
+...

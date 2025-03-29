@@ -1,0 +1,37 @@
+---
+- name: Check kernel taint status
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Check whether our kernel is tainted at all (https://www.kernel.org/doc/html/latest/admin-guide/tainted-kernels.html)
+      ansible.builtin.command: cat /proc/sys/kernel/tainted
+      register: taintstrict
+      changed_when: false
+      failed_when:
+        - taintstrict.stdout != "0"
+      ignore_errors: true  # Continue running playbook even if there's a failure here
+
+    # (if this fails and the one below doesn't then you likely have unsigned modules loaded - try signing them)
+    - name: Check whether our kernel is tainted by something other than externally-built signed modules
+      ansible.builtin.command: cat /proc/sys/kernel/tainted
+      register: taintloose
+      changed_when: false
+      # when the kernel taint is 4096, we know there are out-of-tree module(s) loaded
+      failed_when:
+        - taintloose.stdout != "0"
+        - taintloose.stdout != "4096"
+      ignore_errors: true  # Continue running playbook even if there's a failure here
+
+    # (if this fails then there might be something wrong)
+    - name: Check whether our kernel is tainted by something other than externally-built signed or unsigned modules
+      ansible.builtin.command: cat /proc/sys/kernel/tainted
+      register: taintloose
+      changed_when: false
+      # 12288 is the value given when the kernel taint is 4096 (out-of-tree module(s) loaded)
+      # and also 8192 (unsigned module(s) loaded)
+      failed_when:
+        - taintloose.stdout != "0"
+        - taintloose.stdout != "4096"
+        - taintloose.stdout != "12288"
+      ignore_errors: true  # Continue running playbook even if there's a failure here
+...

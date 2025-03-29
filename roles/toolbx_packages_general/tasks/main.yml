@@ -1,0 +1,11 @@
+---
+- name: Install and remove wanted/unwanted packages (non-Silverblue Fedora)
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Install general packageset
+      ansible.builtin.dnf5:
+        update_cache: true
+        name: '{{ toolbx_packages_general_packages }}'
+        state: present
+...

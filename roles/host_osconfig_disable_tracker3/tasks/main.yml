@@ -1,0 +1,17 @@
+---
+- name: Disable and mask tracker3 services with systemd
+  when: inventory_hostname in groups['host']
+  ansible.builtin.systemd:
+    name: '{{ item }}'
+    state: stopped
+    enabled: false
+    masked: true
+    scope: "user"  # tracker3 processes run as user service units
+  with_items:
+    # Based on list of services compiled from Ubuntu 24.04
+    # May need updating for other distros
+    - tracker-miner-fs-3.service
+    - tracker-miner-fs-control-3.service
+    - tracker-writeback-3.service
+    - tracker-xdg-portal-3.service
+...

@@ -1,0 +1,125 @@
+---
+- name: Set GNOME settings with dconf
+  become: false  # Run as unprivileged user, not as root
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Set interface accent colour
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/accent-color"
+        value: "'teal'"
+        state: present
+
+    - name: Show weekday in desktop clock
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/clock-show-weekday"
+        value: "true"
+        state: present
+
+    - name: Enable dark mode
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/color-scheme"
+        value: "'prefer-dark'"
+        state: present
+
+    - name: Enable Activities Overview Hot Corner
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/hot-corners"
+        value: "true"
+        state: present
+
+    - name: Show battery percentage
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/show-battery-percentage"
+        value: "true"
+        state: present
+
+    - name: Set text scaling to 1.5x (150%)
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/text-scaling-factor"
+        value: "1.5"
+        state: present
+
+    - name: Disable lock screen notifications
+      community.general.dconf:
+        key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+        value: "false"
+        state: present
+
+    - name: Enable tap-to-click
+      community.general.dconf:
+        key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click"
+        value: "true"
+        state: present
+
+    - name: Remove old files after 7 days
+      community.general.dconf:
+        key: "/org/gnome/desktop/privacy/old-files-age"
+        value: "uint32 7"
+        state: present
+
+    - name: Do not remember recent files
+      community.general.dconf:
+        key: "/org/gnome/desktop/privacy/remember-recent-files"
+        value: "false"
+        state: present
+
+    - name: Automatically remove temp files
+      community.general.dconf:
+        key: "/org/gnome/desktop/privacy/remove-old-temp-files"
+        value: "true"
+        state: present
+
+    - name: Automatically empty trash
+      community.general.dconf:
+        key: "/org/gnome/desktop/privacy/remove-old-trash-files"
+        value: "true"
+        state: present
+
+    - name: Do not send automatic problem reports
+      community.general.dconf:
+        key: "/org/gnome/desktop/privacy/report-technical-problems"
+        value: "false"
+        state: present
+
+    - name: Enable Edge Tiling (dragging window to side of screen to resize)
+      community.general.dconf:
+        key: "/org/gnome/mutter/edge-tiling"
+        value: "true"
+        state: present
+
+    - name: Use larger icons in Nautilus default view
+      community.general.dconf:
+        key: "/org/gnome/nautilus/icon-view/default-zoom-level"
+        value: "'large'"  # Note the importance of the nested quotes here
+        state: present
+
+    - name: Always search recursively, even on network drives
+      community.general.dconf:
+        key: "/org/gnome/nautilus/preferences/recursive-search"
+        value: "'always'"  # Note the importance of the nested quotes here
+        state: present
+
+    - name: Always show thumbnails, even on network drives
+      community.general.dconf:
+        key: "/org/gnome/nautilus/preferences/show-image-thumbnails"
+        value: "'always'"  # Note the importance of the nested quotes here
+        state: present
+
+    - name: Disable automatic brightness
+      community.general.dconf:
+        key: "/org/gnome/settings-daemon/plugins/power/ambient-enabled"
+        value: "false"
+        state: present
+
+    - name: Disable automatic sleep when on AC power
+      community.general.dconf:
+        key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
+        value: "'nothing'"  # Note the importance of the nested quotes here
+        state: present
+
+    - name: Disable location services
+      community.general.dconf:
+        key: "/org/gnome/system/location/enabled"
+        value: "false"
+        state: present
+...

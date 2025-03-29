@@ -1,0 +1,32 @@
+---
+- name: Bootstrap Silverblue Dev Workstation
+  hosts:
+    - host
+    - toolbx
+  gather_facts: true
+  any_errors_fatal: true  # We need this since we want the playbook to fully fail if either the host or toolbx experiences an error
+
+  roles:
+    ### osconfig ###
+    - host_osconfig_auto_upgrades_fedora_silverblue
+    - host_osconfig_firewall_base
+    - host_osconfig_firewall_allow_mdns
+    - host_osconfig_disable_root_user
+    - host_osconfig_disable_tracker3
+
+    ### packages ###
+    - host_packages_rpm_ostree_layered
+    - host_packages_flatpak
+    - toolbx_packages_upgrade
+    - toolbx_packages_general
+    - toolbx_packages_quickemu
+
+    ### user-level config ###
+    - host_appconf_distrobox
+    - host_appconf_gnome  # Needs to come after the packages section as it depends on us installing python3-psutil to work
+
+    ### post-run tests ###
+    - host_test_lsm
+    - host_test_kernel_taint
+    - host_test_secureboot
+...

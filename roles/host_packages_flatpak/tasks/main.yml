@@ -1,0 +1,58 @@
+---
+- name: Configure Flatpak and install Flatpaks
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Add Flathub as a remote
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: 'https://dl.flathub.org/repo/flathub.flatpakrepo'
+
+    - name: Install desired Flathub Flatpaks
+      community.general.flatpak:
+        name: "{{ item }}"
+        remote: flathub
+        state: present
+      loop: '{{ host_packages_flatpak_flatpaks }}'
+      register: result
+      retries: 1  # Flathub seems to handle mass downloads poorly and sometimes this fails just due to timeout
+      delay: 10
+      until: result is not failed
+
+- name: Configure Flatpak permissions (runs without elevation deliberately)
+  become: false
+  when: inventory_hostname in groups['host']
+  block:
+    - name: KeePassXC Flatpak - Remove "Network" permission
+      ansible.builtin.command: 'flatpak override --user --unshare=network org.keepassxc.KeePassXC'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    - name: Firefox Flatpak - Remove "X11 windowing system" permission
+      ansible.builtin.command: 'flatpak override --user --nosocket=x11 org.mozilla.firefox'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    - name: Firefox Flatpak - Remove "Fallback to X11 windowing system" permission
+      ansible.builtin.command: 'flatpak override --user --nosocket=fallback-x11 org.mozilla.firefox'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    - name: Firefox Flatpak - Remove "Printing system" permission
+      ansible.builtin.command: 'flatpak override --user --nosocket=cups org.mozilla.firefox'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    # According to the Flatpak manifest on Mozilla's site, they use the devel permission in
+    # order to invoke ptrace for the crash reporter. The application is confined to a PID
+    # namespace, meaning this shouldn't let anyone escape the Flatpak sandbox, but I don't
+    # like it anyway so I disable it here.
+    - name: Firefox Flatpak - Remove "Development syscalls" permission
+      ansible.builtin.command: 'flatpak override --user --disallow=devel org.mozilla.firefox'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    - name: MPV Flatpak - Remove "Network" permission
+      ansible.builtin.command: 'flatpak override --user --unshare=network io.mpv.Mpv'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+
+    - name: MPV Flatpak - Remove "X11 windowing system" permission
+      ansible.builtin.command: 'flatpak override --user --nosocket=x11 io.mpv.Mpv'
+      changed_when: false  # I can't work out a way of determining when this has been changed
+...

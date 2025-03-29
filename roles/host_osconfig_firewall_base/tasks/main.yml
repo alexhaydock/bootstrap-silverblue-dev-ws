@@ -1,0 +1,49 @@
+---
+- name: Configure base firewalld ruleset
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Configure firewalld to use the "drop" zone by default
+      ansible.builtin.command: firewall-cmd --set-default-zone=drop
+      changed_when: false
+
+    - name: Start and enable firewalld
+      ansible.builtin.systemd:
+        name: firewalld.service
+        state: started
+        enabled: true
+
+    # After this task we can assume in below tasks that the firewall is started and running
+    - name: Reload firewalld service
+      ansible.builtin.systemd:
+        name: firewalld
+        state: reloaded
+      changed_when: false
+
+    - name: Add some ICMP types to our ICMP blocklist with icmp_block (we will invert this list later)
+      ansible.posix.firewalld:
+        icmp_block: '{{ item }}'
+        permanent: true
+        immediate: true
+        zone: drop
+        state: enabled
+      with_items:
+        # See: http://shouldiblockicmp.com/
+        # See: RFC 4890
+        # See: `firewall-cmd --get-icmptypes`
+        - destination-unreachable
+        - echo-request
+        - neighbour-advertisement
+        - packet-too-big
+        - parameter-problem
+        - router-advertisement
+        - time-exceeded
+
+    - name: Enable icmp_block_inversion (effectively turns our ICMP blocklist from the above task into an allowlist)
+      ansible.posix.firewalld:
+        icmp_block_inversion: 'yes'  # needs to be a string
+        permanent: true
+        immediate: true
+        zone: drop
+        state: enabled
+...

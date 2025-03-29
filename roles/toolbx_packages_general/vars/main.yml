@@ -1,0 +1,16 @@
+---
+toolbx_packages_general_packages:
+  - ansible
+  - ansible-collection-ansible-posix
+  - ansible-collection-community-general
+  - ansible-collection-containers-podman
+  - ansible-lint
+  - bat  # Like cat, but cooler
+  - below
+  - binwalk
+  - git
+  - htop
+  - hyfetch
+  - nyancat
+  - pre-commit
+...

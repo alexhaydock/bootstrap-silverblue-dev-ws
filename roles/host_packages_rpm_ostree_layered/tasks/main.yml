@@ -1,0 +1,33 @@
+---
+- name: Install and remove wanted/unwanted packages (Silverblue)
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Install desired applications as layered packages
+      community.general.rpm_ostree_pkg:
+        name: "{{ item }}"
+        state: present
+        # apply_live: true  # This feature is not yet available
+      loop: "{{ host_packages_rpm_ostree_layered_packages }}"
+
+    - name: Remove Firefox from the base image using rpm-ostree override
+      ansible.builtin.command: rpm-ostree override remove firefox firefox-langpacks
+      register: ostree_status
+      changed_when: ostree_status.rc == 0  # If we get a return code of zero, assume we actually did remove the package
+      failed_when:
+        - ostree_status.rc == 0
+        - ostree_status.rc == 1  # Any return codes other than 0 or 1 are an error we're not familiar with, so fail the playbook
+
+    - name: Query whether booted RPM-OSTree deployment is first deployment
+      ansible.builtin.shell: rpm-ostree status --json | jq -r .deployments[0].booted
+      register: booted
+      changed_when: false
+      tags:
+        - skip_ansible_lint  # Linter is not happy with the unsafe/non-idempotent shell usage here
+
+    - name: Print debug message
+      ansible.builtin.fail:
+        msg: "An rpm-ostree reboot is pending. Stopping playbook run here. Please reboot before continuing."
+      when:
+        - booted.stdout == "false"
+...

@@ -1,0 +1,13 @@
+---
+- name: Install and remove wanted/unwanted packages (non-Silverblue Fedora)
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Update all packages
+      ansible.builtin.dnf5:
+        update_cache: true
+        name: "*"
+        state: latest
+      tags:
+        - skip_ansible_lint  # ansible-lint doesn't like the use of 'latest' for package installs
+...

@@ -1,0 +1,32 @@
+---
+- name: Install Distrobox config
+  become: true
+  when: inventory_hostname in groups['host']
+  block:
+    - name: Create directory for Distrobox config
+      ansible.builtin.file:
+        path: /etc/distrobox
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Install Distrobox config
+      ansible.builtin.copy:
+        content: |
+          # Add more distros and then use:
+          # distrobox assemble create --replace --file /etc/distrobox/distrobox.ini
+          # This will replace your distroboxes in place
+
+          [ubuntu]
+          image=ghcr.io/ublue-os/ubuntu-toolbox:latest
+          init=false
+          nvidia=false
+          pull=true
+          root=false
+          replace=true
+        dest: /etc/distrobox/distrobox.ini
+        owner: root
+        group: root
+        mode: '0644'
+...

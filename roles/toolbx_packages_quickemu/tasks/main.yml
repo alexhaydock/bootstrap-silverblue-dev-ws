@@ -1,0 +1,17 @@
+---
+- name: Install Quickemu via Copr
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Enable my Quickemu Copr repository
+      # We don't use community.general.copr here because it doesn't support DNF5 yet
+      ansible.builtin.command:
+        cmd: dnf copr enable -y alexhaydock/quickemu
+        creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:alexhaydock:quickemu.repo
+
+    - name: 'Install Quickemu'
+      ansible.builtin.dnf5:
+        update_cache: true
+        name: 'quickemu'
+        state: present
+...
