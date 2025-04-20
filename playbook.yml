@@ -12,7 +12,7 @@
     - host_osconfig_firewall_base
     - host_osconfig_firewall_allow_mdns
     - host_osconfig_disable_root_user
-    - host_osconfig_disable_tracker3
+    #- host_osconfig_disable_tracker3
 
     ### packages ###
     - host_packages_rpm_ostree_layered

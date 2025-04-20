@@ -10,6 +10,7 @@ toolbx_packages_general_packages:
   - binwalk
   - git
   - htop
+  - hugo
   - hyfetch
   - nyancat
   - pre-commit
