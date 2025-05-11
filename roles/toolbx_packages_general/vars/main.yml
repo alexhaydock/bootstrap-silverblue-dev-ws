@@ -13,6 +13,7 @@ toolbx_packages_general_packages:
   - hugo
   - hyfetch
   - nyancat
+  - ollama
   - opentofu
   - optipng
   - pandoc

@@ -4,5 +4,4 @@ host_packages_rpm_ostree_layered_packages:
   - distrobox
   - python3-psutil  # Needed to set dconf settings with Ansible
   - sshfs
-  - wireguard-tools
 ...
