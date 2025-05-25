@@ -9,11 +9,12 @@ host_packages_flatpak_flatpaks:
   - com.jeffser.Alpaca.Plugins.Ollama  # Install Ollama inside Alpaca (it can use external instances or other APIs but this is easiest)
   - com.rafaelmardojai.Blanket
   - com.visualstudio.code
-  - dev.geopjr.Tuba
-  - im.riot.Riot
+  - dev.geopjr.Tuba                    # Mastodon client
+  - im.riot.Riot                       # Now called Element but uses old name
   - io.missioncenter.MissionCenter
   - io.mpv.Mpv
   - md.obsidian.Obsidian
+  - org.chromium.Chromium
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
   - org.gnome.Epiphany
@@ -26,4 +27,6 @@ host_packages_flatpak_flatpaks:
   - org.signal.Signal
   - org.torproject.torbrowser-launcher
   - org.zotero.Zotero
+  - re.sonny.OhMySVG
+  - sh.cider.Cider
 ...
