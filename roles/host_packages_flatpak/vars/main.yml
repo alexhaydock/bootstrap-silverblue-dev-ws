@@ -4,6 +4,7 @@ host_packages_flatpak_flatpaks:
   - com.belmoussaoui.Obfuscate
   - com.bitwarden.desktop
   - com.github.tchx84.Flatseal
+  - com.google.AndroidStudio
   - com.jeffser.Alpaca
   - com.jeffser.Alpaca.Plugins.AMD     # AMD ROCm support for Alpaca
   - com.jeffser.Alpaca.Plugins.Ollama  # Install Ollama inside Alpaca (it can use external instances or other APIs but this is easiest)
