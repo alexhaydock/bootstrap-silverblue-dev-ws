@@ -7,7 +7,7 @@ toolbx_packages_general_packages:
   - ansible-lint
   - bat  # Like cat, but cooler
   - below
-  - binwalk
+  # - binwalk  # Broken on F43
   - git
   - htop
   - hugo
