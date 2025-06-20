@@ -14,9 +14,8 @@ toolbox create --distro fedora --release 43
 toolbox enter
 ```
 
-Inside Toolbx, install Ansible and run our Playbook:
+Inside Toolbx, run our Playbook (also installs Ansible):
 ```sh
-sudo dnf install -y ansible ansible-collection-community-general sshpass
 ./run.sh
 ```
 
