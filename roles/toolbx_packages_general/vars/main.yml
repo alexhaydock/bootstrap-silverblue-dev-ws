@@ -19,7 +19,7 @@ toolbx_packages_general_packages:
   - pandoc
   - pre-commit
   - python3-passlib
+  - quickemu
   - rpmreaper
-  - texlive-scheme-full  # This is huge but it's the lazy way to ensure all Pandoc features work
   - yt-dlp
 ...

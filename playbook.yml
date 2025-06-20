@@ -19,7 +19,6 @@
     - host_packages_flatpak
     - toolbx_packages_upgrade
     - toolbx_packages_general
-    - toolbx_packages_quickemu
 
     ### user-level config ###
     - host_appconf_distrobox
