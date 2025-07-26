@@ -24,6 +24,7 @@ host_packages_flatpak_flatpaks:
   - org.libreoffice.LibreOffice
   - org.mozilla.firefox
   - org.mozilla.Thunderbird
+  - org.nmap.Zenmap
   - org.raspberrypi.rpi-imager
   - org.signal.Signal
   - org.torproject.torbrowser-launcher
