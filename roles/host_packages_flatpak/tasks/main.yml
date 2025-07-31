@@ -21,7 +21,7 @@
       until: result is not failed
 
     - name: Detect system GPU
-      ansible.builtin.shell: lspci
+      ansible.builtin.command: lspci
       register: gpu_detect
       changed_when: false
       ignore_errors: true

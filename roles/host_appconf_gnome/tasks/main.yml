@@ -35,7 +35,7 @@
 
     # So this whole flow is lazy but works for me for now
     - name: Discover current screen resolution of primary display
-      ansible.builtin.command: xrandr | awk -F'[ +]' '/primary/{print $4}'
+      ansible.builtin.shell: xrandr | awk -F'[ +]' '/primary/{print $4}'
       register: screen_res
       changed_when: false
       ignore_errors: true
