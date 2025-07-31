@@ -1,15 +1,16 @@
 ---
 - name: Run resolution gathering inside Toolbx as Fedora hosts don't ship xrandr anymore
-  become: false  # Run as unprivileged user, not as root
   when: inventory_hostname in groups['toolbx']
   block:
     - name: Ensure xrandr package is present to discover resolution (inside Toolbx only)
+      become: true
       ansible.builtin.package:
         name: xrandr
         state: present
 
     # So this whole flow is lazy but works for me for now
     - name: Discover current screen resolution of primary display
+      become: false  # Run as unprivileged user, not as root
       ansible.builtin.shell: xrandr | awk -F'[ +]' '/primary/{print $4}'
       register: screen_res
       changed_when: false
