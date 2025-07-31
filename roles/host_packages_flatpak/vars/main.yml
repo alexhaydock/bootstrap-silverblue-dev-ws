@@ -5,9 +5,6 @@ host_packages_flatpak_flatpaks:
   - com.bitwarden.desktop
   - com.github.tchx84.Flatseal
   - com.google.AndroidStudio
-  - com.jeffser.Alpaca
-  - com.jeffser.Alpaca.Plugins.AMD     # AMD ROCm support for Alpaca
-  - com.jeffser.Alpaca.Plugins.Ollama  # Install Ollama inside Alpaca (it can use external instances or other APIs but this is easiest)
   - com.rafaelmardojai.Blanket
   - com.visualstudio.code
   - dev.geopjr.Tuba                    # Mastodon client
@@ -31,4 +28,9 @@ host_packages_flatpak_flatpaks:
   - org.zotero.Zotero
   - re.sonny.OhMySVG
   - sh.cider.Cider
+
+host_packages_flatpak_alpaca:
+  - com.jeffser.Alpaca
+  - com.jeffser.Alpaca.Plugins.AMD     # AMD ROCm support for Alpaca
+  - com.jeffser.Alpaca.Plugins.Ollama  # Install Ollama inside Alpaca (it can use external instances or other APIs but this is easiest)
 ...

@@ -20,6 +20,24 @@
       delay: 10
       until: result is not failed
 
+    - name: Detect system GPU
+      ansible.builtin.shell: lspci
+      register: gpu_detect
+      changed_when: false
+      ignore_errors: true
+
+    - name: Install Alpaca (local LLM) Flatpaks only if on AMD desktop
+      community.general.flatpak:
+        name: "{{ item }}"
+        remote: flathub
+        state: present
+      loop: '{{ host_packages_flatpak_alpaca }}'
+      register: result
+      retries: 1  # Flathub seems to handle mass downloads poorly and sometimes this fails just due to timeout
+      delay: 10
+      until: result is not failed
+      when: gpu_detect.stdout is search("9070 XT")
+
 - name: Configure Flatpak permissions (runs without elevation deliberately)
   become: false
   when: inventory_hostname in groups['host']

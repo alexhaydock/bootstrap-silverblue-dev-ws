@@ -33,11 +33,26 @@
         value: "true"
         state: present
 
-    - name: Set text scaling to 1.5x (150%)
+    # So this whole flow is lazy but works for me for now
+    - name: Discover current screen resolution of primary display
+      ansib.builtin.command: xrandr | awk -F'[ +]' '/primary/{print $4}'
+      register: screen_res
+      changed_when: false
+      ignore_errors: true
+
+    - name: Set text scaling to 1.5x (150%) on 4K displays
       community.general.dconf:
         key: "/org/gnome/desktop/interface/text-scaling-factor"
         value: "1.5"
         state: present
+      when: screen_res.stdout == "3840x2160"
+
+    - name: Set text scaling to 1.25x (125%) on 1080p displays
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/text-scaling-factor"
+        value: "1.25"
+        state: present
+      when: screen_res.stdout == "1920x1080"
 
     - name: Disable lock screen notifications
       community.general.dconf:
