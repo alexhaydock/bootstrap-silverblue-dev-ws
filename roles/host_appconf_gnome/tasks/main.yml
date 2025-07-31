@@ -1,4 +1,20 @@
 ---
+- name: Run resolution gathering inside Toolbx as Fedora hosts don't ship xrandr anymore
+  become: false  # Run as unprivileged user, not as root
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Ensure xrandr package is present to discover resolution (inside Toolbx only)
+      ansible.builtin.package:
+        name: xrandr
+        state: present
+
+    # So this whole flow is lazy but works for me for now
+    - name: Discover current screen resolution of primary display
+      ansible.builtin.shell: xrandr | awk -F'[ +]' '/primary/{print $4}'
+      register: screen_res
+      changed_when: false
+      ignore_errors: true
+
 - name: Set GNOME settings with dconf
   become: false  # Run as unprivileged user, not as root
   when: inventory_hostname in groups['host']
@@ -32,13 +48,6 @@
         key: "/org/gnome/desktop/interface/show-battery-percentage"
         value: "true"
         state: present
-
-    # So this whole flow is lazy but works for me for now
-    - name: Discover current screen resolution of primary display
-      ansible.builtin.shell: xrandr | awk -F'[ +]' '/primary/{print $4}'
-      register: screen_res
-      changed_when: false
-      ignore_errors: true
 
     - name: Set text scaling to 1.5x (150%) on 4K displays
       community.general.dconf:
