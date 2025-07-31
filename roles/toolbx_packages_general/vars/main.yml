@@ -13,10 +13,10 @@ toolbx_packages_general_packages:
   - hugo
   - hyfetch
   - nyancat
-  - ollama
+  # - ollama  # too large
   - opentofu
   - optipng
-  - pandoc
+  # - pandoc  # too large
   - pre-commit
   - python3-passlib
   - quickemu
