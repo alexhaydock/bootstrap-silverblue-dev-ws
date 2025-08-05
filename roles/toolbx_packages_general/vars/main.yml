@@ -12,6 +12,7 @@ toolbx_packages_general_packages:
   - htop
   - hugo
   - hyfetch
+  - just
   - nyancat
   # - ollama  # too large
   - opentofu
