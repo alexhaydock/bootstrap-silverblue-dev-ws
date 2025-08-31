@@ -15,10 +15,10 @@
     #- host_osconfig_disable_tracker3
 
     ### packages ###
-    - host_packages_rpm_ostree_layered
     - host_packages_flatpak
     - toolbx_packages_upgrade
     - toolbx_packages_general
+    - host_packages_rpm_ostree_layered
 
     ### user-level config ###
     - host_appconf_distrobox
