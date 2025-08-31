@@ -7,6 +7,7 @@ host_packages_flatpak_flatpaks:
   - com.google.AndroidStudio
   - com.rafaelmardojai.Blanket
   - com.visualstudio.code
+  - de.haeckerfelix.Fragments
   - dev.geopjr.Tuba                    # Mastodon client
   - im.riot.Riot                       # Now called Element but uses old name
   - io.missioncenter.MissionCenter
@@ -27,7 +28,6 @@ host_packages_flatpak_flatpaks:
   - org.torproject.torbrowser-launcher
   - org.zotero.Zotero
   - re.sonny.OhMySVG
-  - sh.cider.Cider
 
 host_packages_flatpak_alpaca:
   - com.jeffser.Alpaca
