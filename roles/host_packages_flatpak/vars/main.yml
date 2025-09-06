@@ -18,6 +18,7 @@ host_packages_flatpak_flatpaks:
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
   - org.gnome.Epiphany
+  - org.godotengine.Godot
   - org.jdownloader.JDownloader
   - org.keepassxc.KeePassXC
   - org.libreoffice.LibreOffice
