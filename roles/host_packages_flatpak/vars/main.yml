@@ -6,6 +6,7 @@ host_packages_flatpak_flatpaks:
   - com.github.tchx84.Flatseal
   - com.google.AndroidStudio
   - com.rafaelmardojai.Blanket
+  - com.unity.UnityHub
   - com.visualstudio.code
   - de.haeckerfelix.Fragments
   - dev.geopjr.Tuba                    # Mastodon client
