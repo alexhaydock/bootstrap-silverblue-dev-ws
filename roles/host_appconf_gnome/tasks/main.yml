@@ -43,17 +43,24 @@
       changed_when: false
       ignore_errors: true
 
-    - name: Set text scaling to 1.5x (150%) on 4K displays
-      community.general.dconf:
-        key: "/org/gnome/desktop/interface/text-scaling-factor"
-        value: "1.5"
-        state: present
-      when: screen_height.stdout == "2160"
-
-    - name: Set text scaling to 1.25x (125%) on 1080p displays
+    - name: Set text scaling to 1.25x (125%) on 4K displays
       community.general.dconf:
         key: "/org/gnome/desktop/interface/text-scaling-factor"
         value: "1.25"
+        state: present
+      when: screen_height.stdout == "2160"
+
+    - name: Set text scaling to 1.25x (125%) on Framework 13 internal display
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/text-scaling-factor"
+        value: "1.25"
+        state: present
+      when: screen_height.stdout == "1504"
+
+    - name: Set text scaling to 1x (100%) on 1080p displays
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/text-scaling-factor"
+        value: "1"
         state: present
       when: screen_height.stdout == "1080"
 

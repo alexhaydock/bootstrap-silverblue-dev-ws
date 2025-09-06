@@ -39,12 +39,8 @@
         no_extra_spaces: true
         value: '{{ item.value }}'
       with_items:
-        - option: "Persistent"
-          value: "true"  # Trigger the service immediately if we missed the last run due to the system being off/suspended
-        - option: "OnCalendar"
-          value: "*-*-* 00,06,12,18:00:00"  # Try to update every 6 hours
-        - option: "RandomizedDelaySec"
-          value: "1h"  # With up to a 1h delay
+        - option: "OnUnitInactiveSec"
+          value: "6h"  # Try to update every 6 hours
 
     - name: Create directory to hold systemd drop-in to override rpm-ostreed-automatic service unit settings
       ansible.builtin.file:
