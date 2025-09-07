@@ -14,6 +14,7 @@ host_packages_flatpak_flatpaks:
   - io.missioncenter.MissionCenter
   - io.mpv.Mpv
   - md.obsidian.Obsidian
+  - org.blender.Blender
   - org.chromium.Chromium
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
