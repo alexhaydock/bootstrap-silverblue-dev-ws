@@ -5,12 +5,13 @@ host_packages_flatpak_flatpaks:
   - com.bitwarden.desktop
   - com.github.tchx84.Flatseal
   - com.google.AndroidStudio
+  - com.obsproject.Studio
   - com.rafaelmardojai.Blanket
-  - com.unity.UnityHub
   - com.visualstudio.code
   - de.haeckerfelix.Fragments
   - dev.geopjr.Tuba                    # Mastodon client
   - im.riot.Riot                       # Now called Element but uses old name
+  - io.github.seadve.Kooha             # Screen recorder
   - io.missioncenter.MissionCenter
   - io.mpv.Mpv
   - md.obsidian.Obsidian
@@ -19,7 +20,6 @@ host_packages_flatpak_flatpaks:
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
   - org.gnome.Epiphany
-  - org.godotengine.Godot
   - org.jdownloader.JDownloader
   - org.keepassxc.KeePassXC
   - org.libreoffice.LibreOffice
