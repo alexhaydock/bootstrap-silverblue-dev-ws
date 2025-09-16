@@ -18,6 +18,7 @@ toolbx_packages_general_packages:
   - opentofu
   - optipng
   # - pandoc  # too large
+  - passt  # For use with quickemu
   - pre-commit
   - python3-passlib
   - quickemu
