@@ -19,6 +19,7 @@ host_packages_flatpak_flatpaks:
   - org.chromium.Chromium
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
+  - org.gnome.Builder
   - org.gnome.Epiphany
   - org.jdownloader.JDownloader
   - org.keepassxc.KeePassXC
