@@ -7,7 +7,7 @@ host_packages_flatpak_flatpaks:
   - com.google.AndroidStudio
   - com.obsproject.Studio
   - com.rafaelmardojai.Blanket
-  - com.visualstudio.code
+  - com.vscodium.codium
   - de.haeckerfelix.Fragments
   - dev.geopjr.Tuba                    # Mastodon client
   - im.riot.Riot                       # Now called Element but uses old name
