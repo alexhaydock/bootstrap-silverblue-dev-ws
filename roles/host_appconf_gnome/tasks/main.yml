@@ -136,10 +136,16 @@
         value: "false"
         state: present
 
-    - name: Disable automatic sleep when on AC power
+    - name: Enable automatic sleep when on AC power
       community.general.dconf:
         key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
-        value: "'nothing'"  # Note the importance of the nested quotes here
+        value: "'suspend'"  # Note the importance of the nested quotes here
+        state: present
+
+    - name: Sleep after 1h when on AC (we install Caffeine to pause this on-demand)
+      community.general.dconf:
+        key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout"
+        value: "3600"  # Note the importance of the nested quotes here
         state: present
 
     - name: Disable location services
