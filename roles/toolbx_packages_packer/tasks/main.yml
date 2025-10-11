@@ -1,0 +1,22 @@
+---
+- name: Install Packer & QEMU inside Toolbx container
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Install QEMU
+      ansible.builtin.dnf5:
+        update_cache: true
+        name: 'qemu'
+        state: present
+
+    - name: Install Packer
+      ansible.builtin.unarchive:
+        src: '{{ packer_url }}'
+        dest: /usr/local/bin
+        include:
+          - packer  # Keep only the `packer` binary and nothing else
+        remote_src: true
+        owner: root
+        group: root
+        mode: '0755'
+...

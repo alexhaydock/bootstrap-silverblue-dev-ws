@@ -5,6 +5,8 @@
     - toolbx
   gather_facts: true
   any_errors_fatal: true  # We need this since we want the playbook to fully fail if either the host or toolbx experiences an error
+  vars:
+    packer_url: "https://releases.hashicorp.com/packer/1.14.2/packer_1.14.2_linux_amd64.zip"
 
   roles:
     ### osconfig ###
@@ -18,6 +20,7 @@
     - host_packages_flatpak
     - toolbx_packages_upgrade
     - toolbx_packages_general
+    - toolbx_packages_packer
     - host_packages_rpm_ostree_layered
 
     ### user-level config ###
