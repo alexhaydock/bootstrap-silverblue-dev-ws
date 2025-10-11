@@ -6,7 +6,9 @@
     - name: Install QEMU
       ansible.builtin.dnf5:
         update_cache: true
-        name: 'qemu'
+        name:
+          - qemu
+          - swtpm
         state: present
 
     - name: Install Packer
