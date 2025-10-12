@@ -9,6 +9,7 @@
         name:
           - qemu
           - swtpm
+          - xorriso
         state: present
 
     - name: Install Packer
