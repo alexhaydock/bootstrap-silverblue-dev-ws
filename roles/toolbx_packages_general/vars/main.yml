@@ -9,7 +9,9 @@ toolbx_packages_general_packages:
   - bat  # Like cat, but cooler
   - below
   - binwalk
+  - cargo
   - git
+  - golang
   - htop
   - hugo
   - hyfetch
@@ -19,7 +21,10 @@ toolbx_packages_general_packages:
   - opentofu
   - optipng
   - pre-commit
+  - python3-devel
   - python3-passlib
   - rpmreaper
+  - rust
+  - vhs
   - yt-dlp
 ...
