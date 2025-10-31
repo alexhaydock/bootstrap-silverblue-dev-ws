@@ -18,9 +18,11 @@
 
     ### packages ###
     - host_packages_flatpak
-    - toolbx_packages_upgrade
+    - toolbx_packages_upgrade  # Invokes DNFupdate_cache true inside Toolbx
     - toolbx_packages_general
+    - toolbx_packages_devel
     - toolbx_packages_packer
+    - toolbx_powerline_prompt
     - host_packages_rpm_ostree_layered
 
     ### user-level config ###

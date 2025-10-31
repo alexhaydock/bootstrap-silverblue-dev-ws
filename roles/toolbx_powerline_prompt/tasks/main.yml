@@ -1,0 +1,40 @@
+---
+- name: Install Powerline in Toolbx
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: Install powerline-go in Toolbx container
+      ansible.builtin.dnf5:
+        name:
+          - powerline-go
+        state: present
+
+    - name: Create ~/.bashrc.d/
+      ansible.builtin.file:
+        path: '{{ ansible_user_dir }}/.bashrc.d/'
+        state: directory
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+        mode: '0750'
+
+    - name: Add Powerline to .bashrc prompt
+      ansible.builtin.copy:
+        dest: '{{ ansible_user_dir }}/.bashrc.d/powerline.sh'
+        content: |
+          function _update_ps1() {
+              PS1="$($GOPATH/bin/powerline-go -error $? -jobs $(jobs -p | wc -l))"
+
+              # Uncomment the following line to automatically clear errors after showing
+              # them once. This not only clears the error for powerline-go, but also for
+              # everything else you run in that shell. Don't enable this if you're not
+              # sure this is what you want.
+
+              #set "?"
+          }
+
+          if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
+              PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+          fi
+        owner: '{{ ansible_user_id }}'
+        group: '{{ ansible_user_id }}'
+        mode: '0750'

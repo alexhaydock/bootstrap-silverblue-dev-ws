@@ -1,0 +1,72 @@
+---
+- name: Install development packagesets inside Toolbx container
+  become: true
+  when: inventory_hostname in groups['toolbx']
+  block:
+    - name: "[Devel] Ansible"
+      ansible.builtin.dnf5:
+        name:
+          - ansible
+          - ansible-collection-ansible-posix
+          - ansible-collection-ansible-windows
+          - ansible-collection-community-general
+          - ansible-collection-containers-podman
+          - ansible-lint
+        state: present
+
+    - name: "[Devel] Firmware / Binary Rev Eng"
+      ansible.builtin.dnf5:
+        name:
+          - binwalk
+        state: present
+
+    - name: "[Devel] Generic"
+      ansible.builtin.dnf5:
+        name:
+          - bat  # Like cat, but cooler
+          - git
+          - just
+          - make
+          - pre-commit
+          - vhs  # For documentation purposes
+        state: present
+
+    - name: "[Devel] Golang"
+      ansible.builtin.dnf5:
+        name:
+          - golang
+        state: present
+
+    - name: "[Devel] Python"
+      ansible.builtin.dnf5:
+        name:
+          - python3-devel
+          - python3-pytest
+          - ruff
+        state: present
+
+    - name: "[Devel] RPM Packaging"
+      ansible.builtin.dnf5:
+        name:
+          - rpmreaper
+        state: present
+
+    - name: "[Devel] Rust"
+      ansible.builtin.dnf5:
+        name:
+          - cargo
+          - rust
+        state: present
+
+    - name: "[Devel] Static Site Generators"
+      ansible.builtin.dnf5:
+        name:
+          - hugo
+        state: present
+
+    - name: "[Devel] Terraform / IaC"
+      ansible.builtin.dnf5:
+        name:
+          - opentofu
+        state: present
+...
