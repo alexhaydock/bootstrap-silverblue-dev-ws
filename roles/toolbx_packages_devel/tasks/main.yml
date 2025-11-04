@@ -3,6 +3,24 @@
   become: true
   when: inventory_hostname in groups['toolbx']
   block:
+    - name: "[Devel] Generic"
+      ansible.builtin.dnf5:
+        name:
+          - bat  # Like cat, but cooler
+          - just
+          - make
+          - vhs  # For documentation purposes
+        state: present
+
+    - name: "[Devel] Linters & Git Tooling"
+      ansible.builtin.dnf5:
+        name:
+          - git
+          - pre-commit
+          - ShellCheck
+          - yamllint
+        state: present
+
     - name: "[Devel] Ansible"
       ansible.builtin.dnf5:
         name:
@@ -12,23 +30,15 @@
           - ansible-collection-community-general
           - ansible-collection-containers-podman
           - ansible-lint
+          - python3-passlib  # Needed for generating/hashing passwords with Ansible
+          - python3-winrm    # Needed for using WinRM with Ansible
+          - sshpass          # Needed for connecting to SSH using a password with Ansible
         state: present
 
     - name: "[Devel] Firmware / Binary Rev Eng"
       ansible.builtin.dnf5:
         name:
           - binwalk
-        state: present
-
-    - name: "[Devel] Generic"
-      ansible.builtin.dnf5:
-        name:
-          - bat  # Like cat, but cooler
-          - git
-          - just
-          - make
-          - pre-commit
-          - vhs  # For documentation purposes
         state: present
 
     - name: "[Devel] Golang"

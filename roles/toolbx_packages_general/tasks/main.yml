@@ -3,8 +3,15 @@
   become: true
   when: inventory_hostname in groups['toolbx']
   block:
-    - name: Install general packageset inside Toolbx container
+    - name: '[General] Misc Toolset'
       ansible.builtin.dnf5:
-        name: '{{ toolbx_packages_general_packages }}'
+        name:
+          - below
+          - htop
+          - hyfetch
+          - nyancat
+          - ollama
+          - optipng
+          - yt-dlp
         state: present
 ...
