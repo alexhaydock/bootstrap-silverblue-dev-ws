@@ -35,6 +35,15 @@
           - sshpass          # Needed for connecting to SSH using a password with Ansible
         state: present
 
+    - name: "[Devel] BPF"
+      ansible.builtin.dnf5:
+        name:
+          - bcc-tools
+          - bpftool
+          - clang
+          - libbpf-devel
+        state: present
+
     - name: "[Devel] Firmware / Binary Rev Eng"
       ansible.builtin.dnf5:
         name:
