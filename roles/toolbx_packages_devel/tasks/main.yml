@@ -38,6 +38,7 @@
     - name: "[Devel] BPF"
       ansible.builtin.dnf5:
         name:
+          - bcc-devel
           - bcc-tools
           - bpftool
           - clang
