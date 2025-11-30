@@ -7,10 +7,11 @@ host_packages_flatpak_flatpaks:
   - com.google.AndroidStudio
   - com.obsproject.Studio
   - com.rafaelmardojai.Blanket
+  - com.valvesoftware.Steam
   - com.vscodium.codium
   - de.haeckerfelix.Fragments
   - dev.geopjr.Tuba                    # Mastodon client
-  - im.riot.Riot                       # Now called Element but uses old name
+  - im.fluffychat.Fluffychat
   - io.github.seadve.Kooha             # Screen recorder
   - io.missioncenter.MissionCenter
   - io.mpv.Mpv
@@ -20,12 +21,12 @@ host_packages_flatpak_flatpaks:
   - org.ghidra_sre.Ghidra
   - org.gimp.GIMP
   - org.gnome.Builder
-  - org.gnome.Epiphany
+  - org.gnome.Epiphany                 # GNOME Web
+  - org.inkscape.Inkscape
   - org.jdownloader.JDownloader
   - org.keepassxc.KeePassXC
   - org.libreoffice.LibreOffice
   - org.mozilla.firefox
-  - org.mozilla.Thunderbird
   - org.nmap.Zenmap
   - org.raspberrypi.rpi-imager
   - org.signal.Signal

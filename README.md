@@ -10,7 +10,7 @@ This Playbook is highly Silverblue-specific and does not validate the distributi
 On Silverblue host, enable SSH and enter a Toolbx container:
 ```sh
 sudo systemctl start sshd.service
-toolbox create
+toolbox create -y
 toolbox enter
 ```
 
