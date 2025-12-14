@@ -7,6 +7,8 @@
       ansible.builtin.dnf5:
         name:
           - bat  # Like cat, but cooler
+          - diffoscope  # Compare files to find out why they differ for Reproducible Builds
+          - ghostscript  # For converting / compressing PDFs
           - just
           - make
           - vhs  # For documentation purposes
@@ -55,6 +57,13 @@
       ansible.builtin.dnf5:
         name:
           - golang
+        state: present
+
+    - name: "[Devel] Node / NPM"
+      ansible.builtin.dnf5:
+        name:
+          - node
+          - npm
         state: present
 
     - name: "[Devel] Python"
