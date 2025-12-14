@@ -18,6 +18,7 @@
       ansible.builtin.dnf5:
         name:
           - git
+          - hadolint
           - pre-commit
           - ShellCheck
           - yamllint
